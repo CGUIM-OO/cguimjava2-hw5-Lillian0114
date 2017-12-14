@@ -134,7 +134,7 @@ public class Table {
 				System.out.println(", Loss "+AllPlayers[i].makeBet()+" Chips, the Chips now is: "+AllPlayers[i].getCurrentChips());
 			}
 		}
-		//當計算完畢bet時，記得將array裡bet的值歸0
+		//當一局玩完時，記得將array裡bet的值歸0，方便下一局下注可重新使用
 		for(int i=0; i<pos_betArray.length; i++){
 			pos_betArray[i] = 0;
 		}
