@@ -1,14 +1,16 @@
 import java.util.ArrayList;
 
 public abstract class Person {
-	private ArrayList<Card> oneRoundCard;
+	private ArrayList<Card> oneRoundCard; //此牌局的卡
 	public void setOneRoundCard(ArrayList<Card> cards){
 		oneRoundCard=cards;
 	}
 	public ArrayList<Card> getOneRoundCard(){
 		return oneRoundCard;
 	}
+	
 	public abstract boolean hit_me(Table table);
+	
 	public int getTotalValue() {
 		int Ace_count = 0;
 		int total_value = 0;
