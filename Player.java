@@ -39,7 +39,8 @@ public class Player extends Person {
 		return bet;
 	}
 	
-	@Override
+	@Override 
+	//因為person的hit_me為abstract method，所以當Player繼承Person時就要再寫一次有body的method
 	public boolean hit_me(Table table) {
 		boolean ans=false;
 		if (getTotalValue() == 17 && hasAce()) {
