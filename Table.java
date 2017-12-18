@@ -16,15 +16,15 @@ public class Table {
 	}
 	
 	public void set_player(int pos,Player p){
-		AllPlayers[pos]=p;
+		AllPlayers[pos]=p; //將Player放到牌桌上
 	}
 
 	public Player[] get_player(){
-		return AllPlayers;
+		return AllPlayers; //回傳所有在牌桌上的player
 	}
 	
 	public void set_dealer(Dealer d){
-		dealer=d;
+		dealer=d; //將Dealer放到牌桌上
 	}
 	
 	private void ask_each_player_about_bets(){
@@ -39,7 +39,7 @@ public class Table {
 	}
 	
 	public Card get_face_up_card_of_dealer(){
-		return dealerCard.get(1);
+		return dealerCard.get(1); //回傳dealer打開的那張牌，也就是第二張牌
 	}
 
 	
@@ -49,11 +49,13 @@ public class Table {
 			if(AllPlayers[i]==null){
 				continue;
 			}
+			//發兩張打開的牌給玩家
 			playerCard.add(AllCards.getOneCard(true)); 
 			playerCard.add(AllCards.getOneCard(true));
 			AllPlayers[i].setOneRoundCard(playerCard); //將所拿到的兩張牌到setOneRoundCard裡
 			playerCard=new ArrayList<Card>(); //將此playerCard在一次實體化，供下一個player可有新的空間使用
 		}
+		//再一張蓋著的牌，以及一張打開的牌給莊家
 		dealerCard.add(AllCards.getOneCard(false));
 		dealerCard.add(AllCards.getOneCard(true));
 		dealer.setOneRoundCard(dealerCard);
@@ -77,7 +79,7 @@ public class Table {
 					for(Card c:p.getOneRoundCard()){
 						c.printCard();
 					}
-					if(p.getTotalValue()>21){
+					if(p.getTotalValue()>21){ //如果爆了，就要跳出迴圈，所以hit要等於false
 						hit=false;
 					}
 				}
