@@ -52,10 +52,6 @@ public class Table {
 			playerCard.add(AllCards.getOneCard(true)); 
 			playerCard.add(AllCards.getOneCard(true));
 			AllPlayers[i].setOneRoundCard(playerCard); //將所拿到的兩張牌到setOneRoundCard裡
-			while(AllPlayers[i].hit_me(this)){ //當滿足hit_me==true時，即須要在getOneCard
-				playerCard.add(AllCards.getOneCard(true));
-				AllPlayers[i].setOneRoundCard(playerCard);
-			}
 			playerCard=new ArrayList<Card>(); //將此playerCard在一次實體化，供下一個player可有新的空間使用
 		}
 		dealerCard.add(AllCards.getOneCard(false));
@@ -75,22 +71,23 @@ public class Table {
 				hit=p.hit_me(this);
 				if(hit) //如果hit=true及要牌
 				{
-					System.out.println("Hit! "+p.getName()+ "’s cards now: ");
+					System.out.print("Hit! ");
+					p.getOneRoundCard().add(AllCards.getOneCard(true));
+					System.out.println(p.getName()+"'s Cards now:");
 					for(Card c:p.getOneRoundCard()){
 						c.printCard();
 					}
-					System.out.println(p.getName()+"'s hit is over!");
-				}
-				else 
-				{
-					System.out.println(p.getName()+", Pass hit!");
-					System.out.println(p.getName()+", Final Card:");
-					for(Card c : p.getOneRoundCard()){
-						c.printCard();
+					if(p.getTotalValue()>21){
+						hit=false;
 					}
-					System.out.println(p.getName()+"'s hit is over!");
 				}
 			}while(hit); //使用do-while迴圈是此動作至少會做一次	
+			System.out.println(p.getName()+", Pass hit!");
+			System.out.println(p.getName()+", Final Card:");
+			for(Card c : p.getOneRoundCard()){
+				c.printCard();
+			}
+			System.out.println(p.getName()+"'s hit is over!");
 		}
 		
 	}
@@ -98,17 +95,24 @@ public class Table {
 	private void ask_dealer_about_hits(){
 		boolean hit=false;
 		do{
-			hit=dealer.hit_me(this);
-			if(hit) //當hit=true時
-			{
-				dealerCard.add(AllCards.getOneCard(false));
-				dealer.setOneRoundCard(dealerCard);
-			}
-			else
-			{
-				System.out.println("Dealer's hit is over!");
+			hit=dealer.hit_me(this); //this
+			if(hit){
+				System.out.print("Hit! ");
+				dealer.getOneRoundCard().add(AllCards.getOneCard(true));
+				System.out.println("dealer's Cards now:");
+				for(Card c : dealer.getOneRoundCard()){
+					c.printCard();
+				}
+				if(dealer.getTotalValue()>21){
+					hit=false;
+				}
 			}
 		}while(hit);
+		System.out.println("Dealer's  hit is over!");
+		System.out.println("dealer, Final Card:");
+		for(Card c : dealer.getOneRoundCard()){
+			c.printCard();
+		}
 	}
 	
 	private void calculate_chips(){
